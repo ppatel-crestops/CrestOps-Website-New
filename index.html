@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CrestOps — Fractional Salesforce Administration</title>
+<meta name="description" content="CrestOps works with wholesale, distribution, and manufacturing companies with 20-200 people that run Salesforce alongside NetSuite, QuickBooks, or Acumatica." />
+<link rel="stylesheet" href="ds/styles.css" />
+<script src="ds/_ds_bundle.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What does the audit include, and what do we get at the end?", "acceptedAnswer": {"@type": "Answer", "text": "The audit covers automation, data quality, security and permissions, license usage, integrations, and reporting, and ends in a written report that ranks every finding by business impact with a cost to fix each one. It takes two weeks and the price is fixed before it starts. The report is yours either way; there's no obligation to continue."}},
+    {"@type": "Question", "name": "How is this different from hiring a full-time admin?", "acceptedAnswer": {"@type": "Answer", "text": "A loaded full-time admin costs $100K or more a year, and most 20-200 person companies have 10 to 15 hours a week of real admin work. The Run retainer covers that work at about a third of the cost, done by someone senior enough that you're not training them on the job."}},
+    {"@type": "Question", "name": "Do you work with our ERP?", "acceptedAnswer": {"@type": "Answer", "text": "Most likely, yes. The deepest experience is Salesforce with NetSuite, including Boomi-based integration, and the same approach carries to QuickBooks, Acumatica, and other ERPs. The audit maps exactly what data moves between your systems, in which direction, and where it breaks."}},
+    {"@type": "Question", "name": "What happens after the audit? Are we locked into anything?", "acceptedAnswer": {"@type": "Answer", "text": "Nothing is locked in. The report prices each fix separately; you can hire CrestOps for the Rescue work, hand the report to your own team, or stop there. Most companies pick a handful of items rather than everything at once."}},
+    {"@type": "Question", "name": "Who actually does the work?", "acceptedAnswer": {"@type": "Answer", "text": "Parth does. Audits and admin work stay with one person on purpose, so the context lives in one head. Larger build items go to a small bench of certified Salesforce developers, scoped and reviewed by Parth."}},
+    {"@type": "Question", "name": "How do you handle system access and security?", "acceptedAnswer": {"@type": "Answer", "text": "Work happens through a dedicated user account that you create and can deactivate at any time; no shared logins. Substantive changes go through a sandbox before production, and access is removed the day an engagement ends. Anything specific to your compliance requirements goes into the statement of work."}},
+    {"@type": "Question", "name": "What size and type of company is a fit?", "acceptedAnswer": {"@type": "Answer", "text": "The best fit is a 20-200 person product company, wholesale, distribution, or manufacturing, running Salesforce next to an ERP with no admin on staff. The same test applies to law firms and other organizations on Salesforce-based platforms: if nobody owns the org, the work is the same."}}
+  ]
+}
+</script>
+<style>
+/* Scaffolding only — colors, fonts, radii and shadows come from the bound
+   Nocturne styles.css. The voice: lit dark ground (accent bloom top right,
+   shade lower left), fading rules, accent as line and glow never a flood,
+   outlined buttons, left-hugging asymmetric layout. 28px leading unit,
+   14px half-step; ?baselines or B to review. */
+:root {
+  --leading: 28px;
+  --half: 14px;
+  --edge: clamp(20px, 5vw, 72px);
+  --measure: 58ch;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 720px at 82% -160px,
+      color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%),
+    radial-gradient(1100px 800px at -10% 100%,
+      color-mix(in srgb, black 30%, transparent), transparent 55%),
+    var(--color-bg);
+  text-wrap: pretty;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
+.nav { padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge))); }
+.nav a { white-space: nowrap; }
+@media (max-width: 640px) { .nav a:not(.btn) { display: none; } }
+.brand-mark { height: 20px; width: auto; display: block; }
+
+/* — fading rule (1px, transparent over 48px ends) — */
+.rule { height: 1px; border: 0; margin: 0;
+  background: linear-gradient(to right, transparent, var(--color-divider) 48px calc(100% - 48px), transparent); }
+
+/* — kicker (solid 44px accent dash hung in the gutter, uppercase, tnum) — */
+.kicker {
+  position: relative; display: block;
+  font-size: 13px; line-height: var(--half); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--color-accent); font-feature-settings: "tnum" 1;
+  margin: 0 0 calc(var(--leading) - var(--half));
+}
+.kicker::before { content: ""; position: absolute; left: -64px; top: calc(50% - 0.5px);
+  width: 44px; height: 1px; background: var(--color-accent); }
+@media (max-width: 1280px) { .kicker::before { display: none; } }
+
+/* — section heads + body grammar — */
+.sec-h2 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 32px; line-height: calc(1.5 * var(--leading)); letter-spacing: -0.012em;
+  margin: 0; margin-left: -0.02em; text-box: trim-both cap alphabetic; }
+.body-p { font-size: 15.5px; line-height: var(--leading); max-width: var(--measure);
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0; text-box: trim-both cap alphabetic; }
+.body-p + .body-p { margin-top: calc(var(--leading) - 1cap); }
+.micro { font-size: 13px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 64%, transparent);
+  margin: var(--half) 0 0; text-box: trim-both cap alphabetic; }
+
+/* — hero — */
+.hero { padding: calc(4 * var(--leading)) 0 calc(3 * var(--leading)); }
+.display {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: clamp(33.5px, 4.44vw, 51px); /* ratio-governed ≈1.11 */
+  letter-spacing: -0.015em; margin: calc(1.5 * var(--leading)) 0 0;
+  margin-left: -0.06em; /* optical left alignment — caps lead */
+  text-box: trim-both cap alphabetic;
+}
+.display .line { display: block; }
+.hero .sub { font-size: 17px; line-height: var(--leading); max-width: var(--measure);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0; color: var(--color-text);
+  text-box: trim-both cap alphabetic; }
+.hero .row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;
+  margin-top: var(--leading); }
+
+/* — sound familiar: stacked quote lines, hung “ (Inter's measured advance) — */
+.familiar { padding: calc(2.5 * var(--leading)) 0; }
+.gripes { list-style: none; margin: calc(1.5 * var(--leading) - 1cap) 0 0; padding: 0;
+  display: grid; gap: var(--half); max-width: 52ch; }
+.gripes li { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 21px; line-height: var(--leading); letter-spacing: -0.01em;
+  text-indent: -0.474em; text-box: trim-both cap alphabetic; }
+@media (max-width: 720px) { .gripes li { text-indent: 0; } }
+
+/* — how it works: numbered feature rows, rule-parted, asymmetric — */
+.how { padding: calc(2.5 * var(--leading)) 0 0; }
+.features { margin-top: calc(0.5 * var(--leading)); }
+.feature { display: grid; grid-template-columns: minmax(96px, 140px) minmax(0, 300px) minmax(0, 1fr);
+  gap: var(--leading) clamp(24px, 4vw, 72px); align-items: baseline;
+  padding: calc(1.5 * var(--leading)) 0; }
+.feature + .feature { position: relative; }
+.feature + .feature::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-neutral-700) 48px calc(100% - 48px), transparent); }
+.f-num { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 13px; line-height: var(--leading); color: var(--color-accent);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  font-feature-settings: "tnum" 1; margin: 0; text-box: trim-both cap alphabetic; }
+.f-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 24px; line-height: var(--leading); letter-spacing: -0.01em;
+  margin: 0; text-box: trim-both cap alphabetic; }
+.f-copy { font-size: 15.5px; line-height: var(--leading); margin: 0;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  max-width: 52ch; text-box: trim-both cap alphabetic; }
+.price { font-size: 15.5px; line-height: var(--leading);
+  margin: calc(var(--leading) - 1cap) 0 0;
+  font-feature-settings: "tnum" 1;
+  color: var(--color-accent-300); /* accent at paragraph size takes the 300 step */
+  text-box: trim-both cap alphabetic; }
+
+/* — the retainer line: the system's one saturated move at page scale — */
+.band { background:
+    radial-gradient(900px 420px at 85% -40%,
+      color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%),
+    var(--color-section);
+  padding: calc(2.5 * var(--leading)) 0; margin-top: calc(2.5 * var(--leading)); }
+.band p { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(24px, 2.6vw, 32px); line-height: calc(1.5 * var(--leading));
+  letter-spacing: -0.012em; color: var(--color-text); max-width: 36ch;
+  margin: 0; margin-left: -0.02em; text-box: trim-both cap alphabetic; }
+
+/* — who it's for — */
+.who { padding: calc(3.5 * var(--leading)) 0 calc(2.5 * var(--leading)); }
+.fit { list-style: none; margin: calc(1.5 * var(--leading) - 1cap) 0 0; padding: 0;
+  display: grid; gap: var(--half); }
+.fit li { font-size: 15.5px; line-height: var(--leading);
+  position: relative; padding-left: 28px; text-box: trim-both cap alphabetic; }
+.fit li::before { content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 16px; height: 1px; background: var(--color-accent); } /* short accent marks stay solid */
+
+/* — about — */
+.about { padding: calc(2.5 * var(--leading)) 0; }
+.creds { font-size: 15.5px; line-height: var(--leading);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0; text-box: trim-both cap alphabetic; }
+.creds a { color: var(--color-accent-300); }
+
+/* — faq — */
+.faq { padding: calc(2.5 * var(--leading)) 0; }
+.faq-grid { display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: calc(1.5 * var(--leading)) clamp(28px, 4vw, 72px);
+  margin-top: calc(1.5 * var(--leading)); }
+.faq-grid h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 19px; line-height: var(--leading); letter-spacing: -0.008em;
+  margin: 0; text-box: trim-both cap alphabetic; }
+.faq-grid p { margin-top: calc(var(--leading) - 1cap); }
+
+/* — closing cta — */
+.book { padding: calc(2.5 * var(--leading)) 0 calc(2 * var(--leading)); }
+.cal { max-width: 1000px; margin-top: calc(1.5 * var(--leading));
+  border: 1px solid var(--color-neutral-700); border-radius: var(--radius-lg);
+  overflow: hidden; background: var(--color-bg); }
+.cal .calendly-inline-widget, .cal iframe { border: 0; display: block; }
+.book .row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;
+  margin-top: var(--leading); }
+
+footer { padding: calc(2 * var(--leading)) 0 calc(1.5 * var(--leading));
+  font-size: 13px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+footer p { margin: 0; }
+footer p + p { margin-top: var(--half); }
+
+/* — responsive collapse — */
+@media (max-width: 1080px) {
+  .feature { grid-template-columns: 1fr; gap: var(--half); }
+  .f-copy { max-width: var(--measure); }
+}
+@media (max-width: 880px) {
+  .faq-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .hero { padding-top: calc(2.5 * var(--leading)); }
+}
+
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-brand" style="display:inline-flex;align-items:center;gap:10px"><img class="brand-mark" src="mark.png" alt="" /> CrestOps</span>
+  <a href="#how">How it works</a>
+  <a href="#who">Who it&rsquo;s for</a>
+  <a href="#about">About</a>
+  <a href="#faq">FAQ</a>
+  <a class="btn btn-primary" href="#book">Contact us</a>
+</nav>
+<div class="wrap">
+
+  <section class="hero">
+    <span class="kicker">Fractional Salesforce Administration</span>
+    <h1 class="display"><span class="line">We untangle, document, and run Salesforce</span> <span class="line">for product companies that have outgrown</span> <span class="line">their setup &mdash; but can&rsquo;t justify a $100K admin.</span></h1>
+    <p class="sub">CrestOps works with wholesale, distribution, and manufacturing companies with 20-200 people that run Salesforce alongside NetSuite, QuickBooks, or Acumatica.</p>
+    <div class="row">
+      <a class="btn btn-primary" href="#book">Book an Org Health Audit</a>
+    </div>
+    <p class="micro">20 minutes. We&rsquo;ll tell you whether the audit makes sense for your org. No deck.</p>
+  </section>
+
+  <section class="familiar">
+    <h2 class="sec-h2">Sound familiar?</h2>
+    <ul class="gripes">
+      <li>&ldquo;Nobody really knows how it works since [name] left.&rdquo;</li>
+      <li>&ldquo;I don&rsquo;t trust the pipeline numbers.&rdquo;</li>
+      <li>&ldquo;We&rsquo;re paying for licenses nobody uses.&rdquo;</li>
+      <li>&ldquo;Every small change takes weeks.&rdquo;</li>
+      <li>&ldquo;Salesforce and NetSuite don&rsquo;t talk, so we type everything twice.&rdquo;</li>
+    </ul>
+    <p class="body-p">If two or more of those sound like your company, the software usually isn&rsquo;t the problem. Nobody owns the org. That&rsquo;s the work, in three steps.</p>
+  </section>
+
+  <section class="how" id="how">
+    <h2 class="sec-h2">How it works</h2>
+    <div class="features">
+      <div class="feature">
+        <p class="f-num">Step 1 &middot; Assess</p>
+        <h3 class="f-title">Org Health / AI&#8209;Readiness Audit</h3>
+        <div>
+          <p class="f-copy">A fixed-price inspection of your org: automation, data quality, security and permissions, license usage, integrations, and reporting. You get a written report that ranks every finding by business impact, with a cost to fix each one. The report is yours to use whether or not CrestOps does the fixing.</p>
+          <p class="price">$2,500-5,000 fixed &middot; 2 weeks</p>
+        </div>
+      </div>
+      <div class="feature">
+        <p class="f-num">Step 2 &middot; Rescue</p>
+        <h3 class="f-title">Cleanup or rebuild</h3>
+        <div>
+          <p class="f-copy">The audit&rsquo;s fix list, worked line by line: rebuild the automation that broke, merge or archive the duplicate and dead data, simplify the permissions, and document the org so the next person can find their way around it.</p>
+          <p class="price">Scoped from the audit</p>
+        </div>
+      </div>
+      <div class="feature">
+        <p class="f-num">Step 3 &middot; Run</p>
+        <h3 class="f-title">Fractional admin</h3>
+        <div>
+          <p class="f-copy">Ongoing administration on a monthly retainer: user requests, report and dashboard changes, release management, and small build work. You get a named admin who already knows your org, instead of a ticket queue.</p>
+          <p class="price">From $2,500/mo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /wrap: the retainer line runs full-bleed on the section ground -->
+  <section class="band" aria-label="Retainer cost">
+    <div class="wrap">
+      <p>The retainer runs about a third of the cost of a loaded full-time admin hire.</p>
+    </div>
+  </section>
+<div class="wrap">
+
+  <section class="who" id="who">
+    <h2 class="sec-h2">Who it&rsquo;s for</h2>
+    <p class="body-p">The center of the target is a product business where Salesforce runs sales and service, an ERP runs finance and operations, and nobody on staff owns the Salesforce side. The org still mostly works, but it has drifted from how the business actually runs, and every change waits on a consultant or a brave volunteer.</p>
+    <ul class="fit">
+      <li>20-200 employees</li>
+      <li>Salesforce alongside NetSuite, QuickBooks, or Acumatica</li>
+      <li>No dedicated Salesforce admin on staff</li>
+      <li>Reports that get exported to Excel &ldquo;to fix the numbers&rdquo;</li>
+    </ul>
+    <p class="body-p">The same problem shows up outside product companies. Organizations running platforms built on Salesforce — law firms are a common example — hit the same wall: the vendor supports the product, but nobody administers the org underneath it. CrestOps works with them too.</p>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="sec-h2">Who you&rsquo;d be working with</h2>
+    <p class="body-p">CrestOps is run by Parth Patel, a Salesforce administrator and developer in New Jersey. Parth has spent four years inside Salesforce orgs as an in-house administrator, most recently running a Salesforce and NetSuite stack integrated over Boomi: untangling automation, fixing data, documenting orgs, and keeping the integration honest. Engagements are scoped and led by Parth; build work beyond one person goes to a small bench of certified Salesforce developers he has worked with before.</p>
+        <p class="body-p">Past build work includes a client intake system for a law firm running on Salesforce.</p>
+    <p class="creds">Certified: <a href="https://trailhead.salesforce.com/credentials/verification" target="_blank" rel="noopener">Salesforce Administrator</a> &middot; <a href="https://trailhead.salesforce.com/credentials/verification" target="_blank" rel="noopener">Platform App Builder</a> &middot; <a href="https://trailhead.salesforce.com/credentials/verification" target="_blank" rel="noopener">Platform Developer I</a></p>
+  </section>
+
+  <section class="faq" id="faq">
+    <h2 class="sec-h2">FAQ</h2>
+    <div class="faq-grid">
+      <div>
+        <h3>What does the audit include, and what do we get at the end?</h3>
+        <p class="body-p">The audit covers automation, data quality, security and permissions, license usage, integrations, and reporting, and ends in a written report that ranks every finding by business impact with a cost to fix each one. It takes two weeks and the price is fixed before it starts. The report is yours either way; there&rsquo;s no obligation to continue.</p>
+      </div>
+      <div>
+        <h3>How is this different from hiring a full-time admin?</h3>
+        <p class="body-p">A loaded full-time admin costs $100K or more a year, and most 20-200 person companies have 10 to 15 hours a week of real admin work. The Run retainer covers that work at about a third of the cost, done by someone senior enough that you&rsquo;re not training them on the job.</p>
+      </div>
+      <div>
+        <h3>Do you work with our ERP?</h3>
+        <p class="body-p">Most likely, yes. The deepest experience is Salesforce with NetSuite, including Boomi-based integration, and the same approach carries to QuickBooks, Acumatica, and other ERPs. The audit maps exactly what data moves between your systems, in which direction, and where it breaks.</p>
+      </div>
+      <div>
+        <h3>What happens after the audit? Are we locked into anything?</h3>
+        <p class="body-p">Nothing is locked in. The report prices each fix separately; you can hire CrestOps for the Rescue work, hand the report to your own team, or stop there. Most companies pick a handful of items rather than everything at once.</p>
+      </div>
+      <div>
+        <h3>Who actually does the work?</h3>
+        <p class="body-p">Parth does. Audits and admin work stay with one person on purpose, so the context lives in one head. Larger build items go to a small bench of certified Salesforce developers, scoped and reviewed by Parth.</p>
+      </div>
+      <div>
+        <h3>How do you handle system access and security?</h3>
+        <p class="body-p">Work happens through a dedicated user account that you create and can deactivate at any time; no shared logins. Substantive changes go through a sandbox before production, and access is removed the day an engagement ends. Anything specific to your compliance requirements goes into the statement of work.</p>
+      </div>
+      <div>
+        <h3>What size and type of company is a fit?</h3>
+        <p class="body-p">The best fit is a 20-200 person product company, wholesale, distribution, or manufacturing, running Salesforce next to an ERP with no admin on staff. The same test applies to law firms and other organizations on Salesforce-based platforms: if nobody owns the org, the work is the same.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="book" id="book">
+    <h2 class="sec-h2">Find out what shape your org is in.</h2>
+    <div class="cal">
+      <!-- Calendly inline widget begin -->
+      <div class="calendly-inline-widget" data-url="https://calendly.com/ppatel-crestops/30min?background_color=161826&text_color=e9e9ed&primary_color=9184d9" style="min-width:320px;height:700px;"></div>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      <!-- Calendly inline widget end -->
+    </div>
+    <p class="micro">20 minutes. We&rsquo;ll tell you whether the audit makes sense for your org. No deck.</p>
+  </section>
+
+  <footer>
+    <p>CrestOps LLC &middot; New Jersey</p>
+    <p><a href="mailto:ppatel@crestops.com">ppatel@crestops.com</a> &middot; <a href="#">LinkedIn: company page</a> &middot; <a href="https://www.linkedin.com/in/parth-patel-3748311b8" target="_blank" rel="noopener">LinkedIn: founder</a></p>
+    <p><a href="#">Privacy Policy</a> &middot; &copy; 2026 CrestOps LLC</p>
+  </footer>
+</div>
+
+</body>
+</html>
