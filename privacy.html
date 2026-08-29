@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — CrestOps</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="ds/styles.css" />
+<script src="ds/_ds_bundle.js" defer></script>
+<style>
+/* Scaffolding only — colors, fonts, radii and shadows come from the bound
+   Nocturne styles.css. The voice: lit dark ground (accent bloom top right,
+   shade lower left), fading rules, accent as line and glow never a flood,
+   outlined buttons, left-hugging asymmetric layout. 28px leading unit,
+   14px half-step; ?baselines or B to review. */
+:root {
+  --leading: 28px;
+  --half: 14px;
+  --edge: clamp(20px, 5vw, 72px);
+  --measure: 58ch;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 720px at 82% -160px,
+      color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%),
+    radial-gradient(1100px 800px at -10% 100%,
+      color-mix(in srgb, black 30%, transparent), transparent 55%),
+    var(--color-bg);
+  text-wrap: pretty;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
+.nav { padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge))); }
+.nav a { white-space: nowrap; }
+@media (max-width: 640px) { .nav a:not(.btn) { display: none; } }
+.brand-mark { height: 20px; width: auto; display: block; }
+
+/* — fading rule (1px, transparent over 48px ends) — */
+.rule { height: 1px; border: 0; margin: 0;
+  background: linear-gradient(to right, transparent, var(--color-divider) 48px calc(100% - 48px), transparent); }
+
+/* — kicker (solid 44px accent dash hung in the gutter, uppercase, tnum) — */
+.kicker {
+  position: relative; display: block;
+  font-size: 13px; line-height: var(--half); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--color-accent); font-feature-settings: "tnum" 1;
+  margin: 0 0 calc(var(--leading) - var(--half));
+}
+.kicker::before { content: ""; position: absolute; left: -64px; top: calc(50% - 0.5px);
+  width: 44px; height: 1px; background: var(--color-accent); }
+@media (max-width: 1280px) { .kicker::before { display: none; } }
+
+/* — section heads + body grammar — */
+.sec-h2 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 32px; line-height: calc(1.5 * var(--leading)); letter-spacing: -0.012em;
+  margin: 0; margin-left: -0.02em; text-box: trim-both cap alphabetic; }
+.body-p { font-size: 15.5px; line-height: var(--leading); max-width: var(--measure);
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0; text-box: trim-both cap alphabetic; }
+.body-p + .body-p { margin-top: calc(var(--leading) - 1cap); }
+.micro { font-size: 13px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 64%, transparent);
+  margin: var(--half) 0 0; text-box: trim-both cap alphabetic; }
+
+/* — hero — */
+.hero { padding: calc(4 * var(--leading)) 0 calc(3 * var(--leading)); }
+.display {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: clamp(33.5px, 4.44vw, 51px); /* ratio-governed ≈1.11 */
+  letter-spacing: -0.015em; margin: calc(1.5 * var(--leading)) 0 0;
+  margin-left: -0.06em; /* optical left alignment — caps lead */
+  text-box: trim-both cap alphabetic;
+}
+.display .line { display: block; }
+.hero .sub { font-size: 17px; line-height: var(--leading); max-width: var(--measure);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0; color: var(--color-text);
+  text-box: trim-both cap alphabetic; }
+.hero .row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;
+  margin-top: var(--leading); }
+
+/* — sound familiar: stacked quote lines, hung “ (Inter's measured advance) — */
+.familiar { padding: calc(2.5 * var(--leading)) 0; }
+.gripes { list-style: none; margin: calc(1.5 * var(--leading) - 1cap) 0 0; padding: 0;
+  display: grid; gap: var(--half); max-width: 52ch; }
+.gripes li { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 21px; line-height: var(--leading); letter-spacing: -0.01em;
+  text-indent: -0.474em; text-box: trim-both cap alphabetic; }
+@media (max-width: 720px) { .gripes li { text-indent: 0; } }
+
+/* — how it works: numbered feature rows, rule-parted, asymmetric — */
+.how { padding: calc(2.5 * var(--leading)) 0 0; }
+.features { margin-top: calc(0.5 * var(--leading)); }
+.feature { display: grid; grid-template-columns: minmax(96px, 140px) minmax(0, 300px) minmax(0, 1fr);
+  gap: var(--leading) clamp(24px, 4vw, 72px); align-items: baseline;
+  padding: calc(1.5 * var(--leading)) 0; }
+.feature + .feature { position: relative; }
+.feature + .feature::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-neutral-700) 48px calc(100% - 48px), transparent); }
+.f-num { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 13px; line-height: var(--leading); color: var(--color-accent);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  font-feature-settings: "tnum" 1; margin: 0; text-box: trim-both cap alphabetic; }
+.f-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 24px; line-height: var(--leading); letter-spacing: -0.01em;
+  margin: 0; text-box: trim-both cap alphabetic; }
+.f-copy { font-size: 15.5px; line-height: var(--leading); margin: 0;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  max-width: 52ch; text-box: trim-both cap alphabetic; }
+.price { font-size: 15.5px; line-height: var(--leading);
+  margin: calc(var(--leading) - 1cap) 0 0;
+  font-feature-settings: "tnum" 1;
+  color: var(--color-accent-300); /* accent at paragraph size takes the 300 step */
+  text-box: trim-both cap alphabetic; }
+
+/* — the retainer line: the system's one saturated move at page scale — */
+.band { background:
+    radial-gradient(900px 420px at 85% -40%,
+      color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%),
+    var(--color-section);
+  padding: calc(2.5 * var(--leading)) 0; margin-top: calc(2.5 * var(--leading)); }
+.band p { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(24px, 2.6vw, 32px); line-height: calc(1.5 * var(--leading));
+  letter-spacing: -0.012em; color: var(--color-text); max-width: 36ch;
+  margin: 0; margin-left: -0.02em; text-box: trim-both cap alphabetic; }
+
+/* — who it's for — */
+.who { padding: calc(3.5 * var(--leading)) 0 calc(2.5 * var(--leading)); }
+.fit { list-style: none; margin: calc(1.5 * var(--leading) - 1cap) 0 0; padding: 0;
+  display: grid; gap: var(--half); }
+.fit li { font-size: 15.5px; line-height: var(--leading);
+  position: relative; padding-left: 28px; text-box: trim-both cap alphabetic; }
+.fit li::before { content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 16px; height: 1px; background: var(--color-accent); } /* short accent marks stay solid */
+
+/* — about — */
+.about { padding: calc(2.5 * var(--leading)) 0; }
+.creds { font-size: 15.5px; line-height: var(--leading);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0; text-box: trim-both cap alphabetic; }
+.creds a { color: var(--color-accent-300); }
+
+/* — faq — */
+.faq { padding: calc(2.5 * var(--leading)) 0; }
+.faq-grid { display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: calc(1.5 * var(--leading)) clamp(28px, 4vw, 72px);
+  margin-top: calc(1.5 * var(--leading)); }
+.faq-grid h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 19px; line-height: var(--leading); letter-spacing: -0.008em;
+  margin: 0; text-box: trim-both cap alphabetic; }
+.faq-grid p { margin-top: calc(var(--leading) - 1cap); }
+
+/* — closing cta — */
+.book { padding: calc(2.5 * var(--leading)) 0 calc(2 * var(--leading)); }
+.cal { max-width: 1000px; margin-top: calc(1.5 * var(--leading));
+  border: 1px solid var(--color-neutral-700); border-radius: var(--radius-lg);
+  overflow: hidden; background: var(--color-bg); }
+.cal .calendly-inline-widget, .cal iframe { border: 0; display: block; }
+.book .row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;
+  margin-top: var(--leading); }
+
+footer { padding: calc(2 * var(--leading)) 0 calc(1.5 * var(--leading));
+  font-size: 13px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+footer p { margin: 0; }
+footer p + p { margin-top: var(--half); }
+
+/* — responsive collapse — */
+@media (max-width: 1080px) {
+  .feature { grid-template-columns: 1fr; gap: var(--half); }
+  .f-copy { max-width: var(--measure); }
+}
+@media (max-width: 880px) {
+  .faq-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .hero { padding-top: calc(2.5 * var(--leading)); }
+}
+
+/* Review aid: the 28px rhythm as hairlines — ?baselines or the B key. */
+body[data-baselines] { position: relative; }
+body[data-baselines]::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--color-accent) 35%, transparent) 0 1px,
+      transparent 1px var(--leading)),
+    repeating-linear-gradient(to bottom,
+      transparent 0 var(--half),
+      color-mix(in srgb, var(--color-accent) 16%, transparent) var(--half) calc(var(--half) + 1px),
+      transparent calc(var(--half) + 1px) var(--leading));
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit"><img class="brand-mark" src="mark.png" alt="" /> CrestOps</a>
+  <a href="index.html#how">How it works</a>
+  <a href="index.html#who">Who it&rsquo;s for</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#faq">FAQ</a>
+  <a class="btn btn-primary" href="index.html#book">Contact us</a>
+</nav>
+<div class="wrap">
+  <section class="hero" style="padding-bottom: calc(1.5 * var(--leading))">
+    <span class="kicker">Privacy Policy</span>
+    <h1 class="display" style="font-size:clamp(28px,3vw,38px);line-height:calc(1.5 * var(--leading))">Privacy Policy</h1>
+    <p class="micro">Effective August 29, 2026</p>
+  </section>
+  <section style="padding-bottom: calc(2.5 * var(--leading))">
+    <p class="body-p" style="margin-top:0">CrestOps LLC (&ldquo;CrestOps,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) operates this website. This policy describes what information we collect through it and how we use it.</p>
+    <h2 class="sec-h2" style="font-size:22px;margin-top:calc(1.5 * var(--leading))">Information we collect</h2>
+    <p class="body-p">We collect information you choose to give us: your name, email address, and anything you include when you book a call through the scheduling form or email us directly. We do not collect payment information through this site.</p>
+    <h2 class="sec-h2" style="font-size:22px;margin-top:calc(1.5 * var(--leading))">Scheduling</h2>
+    <p class="body-p">Call booking is handled by Calendly. When you book, the information you enter is processed by Calendly under its own privacy policy (calendly.com/privacy). We receive the details you submit so we can hold the call.</p>
+    <h2 class="sec-h2" style="font-size:22px;margin-top:calc(1.5 * var(--leading))">How we use it</h2>
+    <p class="body-p">We use your information to respond to you, schedule and hold calls, and carry out any engagement you hire us for. We do not sell your information, and we do not share it with third parties except the service providers named above or where the law requires.</p>
+    <h2 class="sec-h2" style="font-size:22px;margin-top:calc(1.5 * var(--leading))">Retention and your choices</h2>
+    <p class="body-p">We keep correspondence for as long as we need it to work with you. You can ask us to delete what we hold about you at any time by emailing <a href="mailto:ppatel@crestops.com" style="color:var(--color-accent-300)">ppatel@crestops.com</a>.</p>
+    <h2 class="sec-h2" style="font-size:22px;margin-top:calc(1.5 * var(--leading))">Changes</h2>
+    <p class="body-p">If this policy changes, the new version will be posted on this page with an updated effective date.</p>
+  </section>
+  <footer>
+    <p>CrestOps LLC &middot; New Jersey</p>
+    <p><a href="mailto:ppatel@crestops.com">ppatel@crestops.com</a> &middot; <a href="https://www.linkedin.com/in/parth-patel-3748311b8" target="_blank" rel="noopener">LinkedIn: founder</a></p>
+    <p><a href="privacy.html">Privacy Policy</a> &middot; &copy; 2026 CrestOps LLC</p>
+  </footer>
+</div>
+</body>
+</html>
